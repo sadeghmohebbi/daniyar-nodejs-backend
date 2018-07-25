@@ -1,10 +1,9 @@
 var mongoose = require('mongoose').set('debug', true);
 var Promise = require('promise');
-var models = require('./models.js');
 
 function difineModels() {
     var definedModels = new Object();
-    
+    definedModels.User = require('./models/User');
     return definedModels;
 }
 
@@ -21,7 +20,7 @@ function start() {
                 console.log(error);
                 resolve(null);
             } else {
-                resolve(models.difineModels());
+                resolve(difineModels());
             }
         });
     });
