@@ -1,0 +1,32 @@
+{
+  "name": "serat-nodejs-backend",
+  "version": "1.0.0",
+  "description": "serat nodejs backend",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/sadeghdev/serat-nodejs-backend.git"
+  },
+  "author": "Sadegh Mohebbi <mohebbi.sadegh@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/sadeghdev/serat-nodejs-backend/issues"
+  },
+  "homepage": "https://gitlab.com/sadeghdev/serat-nodejs-backend#README",
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "express-validator": "^5.3.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.7",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "promise": "^8.0.1"
+  }
+}

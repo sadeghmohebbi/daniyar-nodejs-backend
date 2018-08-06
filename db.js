@@ -1,26 +1,29 @@
 var mongoose = require('mongoose').set('debug', true);
 var Promise = require('promise');
 
-function difineModels() {
-    var definedModels = new Object();
-    definedModels.User = require('./models/User');
-    return definedModels;
+const TAG = "[db]"
+
+function defineModels() {
+    let models = {};
+    models["User"] = require('./models/User');
+    return models;
 }
 
 function start() {
-    return new Promise(function(resolve, reject) {
-        var mongoDB = 'mongodb://127.0.0.1:27017/serat_db_1';
+    return new Promise((resolve, reject) => {
+        var mongoDB = 'mongodb://localhost:27017/serat_db_1';
         mongoose.Promise = Promise;
         var options = {
-            useMongoClient: true,
-            autoIndex: true
+            autoIndex: true,
+            useNewUrlParser: true
         };
         mongoose.connect(mongoDB, options, function (error) {
             if (error) {
-                console.log(error);
-                resolve(null);
+                console.log(TAG, error);
+                reject(error);
             } else {
-                resolve(difineModels());
+                console.log(TAG, "models defined and mongoose connected");
+                resolve(defineModels());
             }
         });
     });

@@ -1,10 +1,9 @@
-const mongoose = require('mongoose');
 const passport = require('passport');
 const router = require('express').Router();
 const auth = require('../auth');
-const User = mongoose.model('User');
+const User = require('../../models/User');
 const { check } = require('express-validator/check');
-const validatorMessage = require('../validatorMessageUtil');
+const validatorMessage = require('../../utils/validator-message-util');
 
 //POST new user route (optional, everyone has access)
 router.post('/', [
@@ -13,11 +12,11 @@ router.post('/', [
 ], validatorMessage, auth.optional, (req, res, next) => {
     const { body: { user } } = req;
     
-    const user = new User(user);
+    const user_object = new User(user);
 
-    user.setPassword(user.password);
+    user_object.setPassword(user.password);
 
-    return user.save().then(() => res.json({ data: user.toAuthJSON() }));
+    return user_object.save().then(() => res.json({ data: user_object.toAuthJSON() }));
 });
 
 //POST login route (optional, everyone has access)
