@@ -6,6 +6,8 @@
 .DS_Store
 /public/
 config.js
+package.json
+package-lock.json
 .idea/
 /logs/
 primary.crt
