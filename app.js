@@ -33,5 +33,3 @@ db.start().then(models => {
 }).catch((err) => {
     console.error(TAG, err);
 });
-
-

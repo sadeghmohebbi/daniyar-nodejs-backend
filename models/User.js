@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const config = require('../config');
 
 const saltRounds = 10;
 const jwtOptions = { "expiresIn": '2h' };
@@ -14,7 +15,7 @@ var userSchema = new Schema({
 
 userSchema.methods.setPassword = function(password) {
     this.salt = bcrypt.genSaltSync(saltRounds);
-    this.hash = bcrypt.hashSync(password, salt);
+    this.hash = bcrypt.hashSync(password, this.salt);
 };
 
 userSchema.methods.validatePassword = function(password) {
@@ -25,7 +26,7 @@ userSchema.methods.generateJWT = function() {
     return jwt.sign({
         email: this.email,
         id: this._id,
-    }, 'secret', jwtOptions);
+    }, config.secret, jwtOptions);
 }
 
 userSchema.methods.toAuthJSON = function() {
