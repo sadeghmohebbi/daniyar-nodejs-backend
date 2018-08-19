@@ -3,43 +3,14 @@ const router = require('express').Router();
 const auth = require('../auth');
 const User = require('../../models/User');
 const { check } = require('express-validator/check');
-const validatorMessage = require('../../utils/validator-message-util');
+const messageValidator = require('../../utils/validator-message-util');
+const _ = require('lodash');
+const moment = require('moment');
 
-/**
- * 
- * @api {psot} /users auth user
- * @apiName authUser
- * @apiGroup User
- * @apiVersion  1.0.0
- * 
- * 
- * @apiParam  {Object} user email, password
- * 
- * @apiSuccess (200) {Object} data _id, email, token
- * 
- * @apiParamExample  {Object} Request-Example:
- * {
- *  user: {
- *      email: "mohebbi.sadegh@gmail.com"
- *      password: "123456"
- *  }
- * }
- * 
- * 
- * @apiSuccessExample {Object} Success-Response:
- *  HTTP 200 OK
- *  {
- *      data: {
- *          "_id": "5b69ebd4ae9c84038f318bb4",
- *          "email": "mohebbi.sadegh@gmail.com",
- *          "token": "<TOKEN>"
- *      }
- *  }
- */
 router.post('/', [
     check('user.email').isEmail(),
     check('user.password').isLength({ min: 6 })
-], validatorMessage, auth.optional, (req, res, next) => {
+], messageValidator, auth.optional, (req, res, next) => {
     const { body: { user } } = req;
 
     return User.findOne({"email": user.email}).exec((err, user) => {
@@ -54,7 +25,7 @@ router.post('/', [
                 user_object.setPassword(user.password);
             
                 return user_object.save().then(() => res.json({
-                    data: user_object.toAuthJSON() 
+                    user: user_object.toAuthJSON() 
                 }));
             }
         }
@@ -65,8 +36,8 @@ router.post('/', [
 router.post('/login', [
     check('user.email').isEmail(),
     check('user.password').isLength({ min: 6 })
-], validatorMessage, auth.optional, (req, res, next) => {
-    const { body: { user } } = req;
+], messageValidator, auth.optional, (req, res, next) => {
+    // const { body: { user } } = req;
 
     return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
         if(err) {
@@ -77,7 +48,7 @@ router.post('/login', [
             const user = passportUser;
             user.token = passportUser.generateJWT();
 
-            return res.json({ data: user.toAuthJSON() });
+            return res.json({ user: user.toAuthJSON() });
         }
 
         return res.status(400).json(info);
@@ -93,8 +64,47 @@ router.get('/me', auth.required, (req, res, next) => {
             return res.sendStatus(400);
         }
 
-        return res.json({ data: user.toAuthJSON() });
+        return res.json({ user });
     });
 });
+
+router.get('/token', auth.basic, (req, res, next) => {
+    const { sub: { id } } = req;
+    
+    return User.findById(id).exec((err, user) => {
+        if (err || !user) {
+            return res.status(400).send(err);
+        }
+        
+        return res.json({ access_token: user.generateJWT() });
+    });
+});
+
+router.put('/', auth.required, (req, res, next) => {
+    const { sub: { id } } = req;
+
+    var user_finder = { _id: id, is_active: true, is_hidden: false };
+    return User.countDocuments(user_finder, (err, count) => {
+        if (err) {
+            return res.status(400).send(err || 'user not found');
+        } else {
+            if (Object.keys(_.pickBy(req.body, _.identity)).length > 0) {
+                return User.update(user_finder, _.assign(_.omit(_.pickBy(req.body, _.identity), ['_id']), {updated_at: moment().unix()}), (err) => {
+                    if (err) {
+                        return res.status(400).send(err);
+                    } else {
+                        return res.json({ result: 'ok'});
+                    }
+                });
+            } else {
+                return res.sendStatus(204);
+            }
+        }
+    });
+});
+
+//TODO: router.get('/auth/google')
+
+//TODO: router.get('/auth/google/callback')
 
 module.exports = router;

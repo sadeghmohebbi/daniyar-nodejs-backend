@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 db.start().then(models => {
     //configure passport
-    require('./utils/passport-util')(models);
+    require('./utils/passport-local')(models);
     
     //root welcome page api
     app.get('/', (req, res) => res.send('<p>Welcome to <strong>serat</strong> API</p>'));
