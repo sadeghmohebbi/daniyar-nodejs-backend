@@ -33,5 +33,9 @@
     "passport-google-oauth20": "^1.0.0",
     "passport-local": "^1.0.0",
     "promise": "^8.0.1"
+  },
+  "engines":{
+    "node": "8.11.1",
+    "npm": "5.6.0"
   }
 }
