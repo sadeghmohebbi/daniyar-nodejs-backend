@@ -17,24 +17,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 db.start().then(models => {
-    try {
-        //configure passport
-        require('./utils/passport-local')(models);
-        
-        //root welcome page api
-        app.get('/', (req, res) => res.send('<p>Welcome to <strong>serat</strong> API</p>'));
-        
-        //configure routes
-        app.use(require('./routes'));
-        
-        var port = process.env.PORT || 3000;
-        console.log(port);
-        app.listen(port, '0.0.0.0', function () {
-            console.log('[Server] http: serat app listening on port ' + port);
-        });
-    } catch(err) {
-        console.error(err);
-    }
+    //configure passport
+    require('./utils/passport-local')(models);
+    
 }).catch((err) => {
     console.error(TAG, err);
+});
+
+//root welcome page api
+app.get('/', (req, res) => res.send('<p>Welcome to <strong>serat</strong> API</p>'));
+
+//configure routes
+app.use(require('./routes'));
+
+var port = process.env.PORT || 3000;
+app.listen(port, '0.0.0.0', function () {
+    console.log('[Server] http: serat app listening on port ' + port);
 });
