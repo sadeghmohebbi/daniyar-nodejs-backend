@@ -42,6 +42,7 @@ var userSchema = new Schema({
 userSchema.methods.setPassword = function(password) {
     this.salt = bcrypt.genSaltSync(saltRounds);
     this.hash = bcrypt.hashSync(password, this.salt);
+    this.user_name = this.email;
 };
 
 userSchema.methods.validatePassword = function(password) {
