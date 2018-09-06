@@ -26,9 +26,13 @@ var userSchema = new Schema({
     city: { type: Schema.ObjectId, ref: 'City' },
     image_urls: [String],
     role: { type: String, default: "user", enum: [
-        "user",
+        "student",
+        "student-master",
+        "teacher",
+        "university-master",
+        "university-org",
         "admin"
-    ]},
+    ], default: "student"},
     is_hidden: { type: Boolean, default: false},
     is_active: { type: Boolean, default: true},
     created_at: { type: Number, default: moment().unix() },

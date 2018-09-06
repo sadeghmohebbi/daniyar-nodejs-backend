@@ -13,20 +13,24 @@ router.post('/', [
 ], messageValidator, auth.optional, (req, res, next) => {
     const { body: { user } } = req;
 
-    return User.findOne({"email": user.email}).exec((err, user) => {
+    return User.findOne({"email": user.email}).exec((err, found_user) => {
         if (err) {
             return next(err);
         } else {
-            if (user) {
+            if (found_user) {
                 return res.status(409).json({errors: [{'email': 'alrealy exist'}]});
             } else {
-                const user_object = new User(user);
-            
+                var user_object = new User(user);
+
                 user_object.setPassword(user.password);
-            
-                return user_object.save().then(() => res.json({
-                    user: user_object.toAuthJSON() 
-                }));
+
+                user_object.save((err) => {
+                    if (err) {
+                        return res.status(400).send(err);
+                    } else {
+                        return res.json({ user: user_object.toAuthJSON() });
+                    }
+                });
             }
         }
     });
@@ -89,9 +93,9 @@ router.put('/', auth.required, (req, res, next) => {
             return res.status(400).send(err || 'user not found');
         } else {
             if (Object.keys(_.pickBy(req.body, _.identity)).length > 0) {
-                return User.update(user_finder, _.assign(_.omit(_.pickBy(req.body, _.identity), ['_id']), {updated_at: moment().unix()}), (err) => {
-                    if (err) {
-                        return res.status(400).send(err);
+                return User.findOneAndUpdate(user_finder, _.assign(_.omit(_.pickBy(req.body, _.identity), ['_id']), {updated_at: moment().unix()}), (err, user) => {
+                    if (err || !user) {
+                        return res.status(400).send(err || "user not found");
                     } else {
                         return res.json({ result: 'ok'});
                     }

@@ -4,6 +4,7 @@ var Promise = require('promise');
 
 const TAG = "[db]"
 
+//for using models in project it should be defined before server start
 function defineModels() {
     let models = {};
     models["User"] = require('./models/User');

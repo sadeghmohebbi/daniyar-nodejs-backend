@@ -12,6 +12,7 @@ module.exports = () => {
         clientSecret: config.GOOGLE_CLIENT_SECRET,
         callbackURL: config.domain + "/v1/users/auth/google/callback"
     }, function(accessToken, refreshToken, profile, cb) {
+        console.log(profile);
         User.findOrCreate({ googleId: profile.id }, function (err, user) { return cb(err, user); });
     }));
 }

@@ -17,13 +17,13 @@ module.exports = function permit(...allowed) {
                 req.user = user;
 
                 if (isAllowed(req.user.role)) {
-                    next(); // role is allowed, so continue on the next middleware
+                    return next(); // role is allowed, so continue on the next middleware
                 } else {
-                    res.sendStatus(403); // user is forbidden
+                    return res.sendStatus(403); // user is forbidden
                 }
            });
         } else {
-            next();
+            return next();
         }
     }
 }
