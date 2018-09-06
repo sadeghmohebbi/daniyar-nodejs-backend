@@ -7,7 +7,6 @@ const morgan = require('morgan');
 const db = require('./db');
 
 const TAG = "[Server]";
-const HTTP_PORT = process.env.PORT || 3000;
 
 //Configure our app
 app.use(cors());
@@ -27,6 +26,7 @@ db.start().then(models => {
     //configure routes
     app.use(require('./routes'));
     
+    let HTTP_PORT = process.env.PORT || 3000;
     app.listen(HTTP_PORT, () => {
         console.log(TAG, 'http: serat app listening on port ' + HTTP_PORT);
     });
