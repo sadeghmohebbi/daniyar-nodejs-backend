@@ -7,7 +7,7 @@ const morgan = require('morgan');
 const db = require('./db');
 
 const TAG = "[Server]";
-const HTTP_PORT = 3000;
+const HTTP_PORT = process.env.PORT || 3000;
 
 //Configure our app
 app.use(cors());
