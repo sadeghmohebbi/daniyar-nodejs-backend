@@ -13,7 +13,8 @@ function defineModels() {
 
 function start() {
     return new Promise((resolve, reject) => {
-        var mongoDB = process.env.MONGOLAB_URL || 'mongodb://localhost:27017/serat_db_1';
+        // var mongoDB = process.env.MONGOLAB_URL || 'mongodb://localhost:27017/serat_db_1';
+        var mongoDB = 'mongodb://sadeghmohebbi:Sadegh2221689@ds145412.mlab.com:45412/prototype_sadeghdev';
         mongoose.Promise = Promise;
         var options = {
             autoIndex: true,
