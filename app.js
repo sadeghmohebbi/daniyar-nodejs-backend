@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const db = require('./db');
-const http = require('http');
 
 const TAG = "[Server]";
 
@@ -27,9 +26,9 @@ db.start().then(models => {
     //configure routes
     app.use(require('./routes'));
     
-    let HTTP_PORT = process.env.PORT || 3000;
-    http.createServer(app).listen(HTTP_PORT, function () {
-        console.log('[Server] http: serat app listening on port ' + HTTP_PORT);
+    var port = process.env.PORT || 3000;
+    app.listen(port, function () {
+        console.log('[Server] http: serat app listening on port ' + port);
     });
 }).catch((err) => {
     console.error(TAG, err);
