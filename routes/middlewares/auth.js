@@ -1,6 +1,6 @@
 const jwt = require('express-jwt');
 const CryptoJS = require("crypto-js");
-const config = require('../config');
+const config = require('../../config');
 
 const getTokenFromHeaders = (req) => {
     const { headers: { authorization } } = req;

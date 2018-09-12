@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../../models/User');
 
 // middleware for doing role-based permissions
 module.exports = function permit(...allowed) {
