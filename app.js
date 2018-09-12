@@ -28,7 +28,7 @@ db.start().then(models => {
 app.get('/', (req, res) => res.send('<p>Welcome to <strong>serat</strong> API</p>'));
 
 //configure routes and global middlewares
-app.use(messageValidator, require('./routes/middlewares'));
+app.use(messageValidator, require('./routes'));
 
 var port = process.env.PORT || 3000;
 app.listen(port, '0.0.0.0', function () {

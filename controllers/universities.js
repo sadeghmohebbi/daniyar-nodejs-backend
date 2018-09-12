@@ -1,4 +1,4 @@
-const University = require('../../models/University');
+const University = require('../models/University');
 const { check } = require('express-validator/check');
 const _ = require('lodash');
 
