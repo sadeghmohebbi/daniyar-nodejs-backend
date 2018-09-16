@@ -1,5 +1,4 @@
-const University = require('../models/University');
-const { check } = require('express-validator/check');
+const { University } = require('../models/University');
 const _ = require('lodash');
 
 const pick_items = [

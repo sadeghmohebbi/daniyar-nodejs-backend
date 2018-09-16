@@ -1,13 +1,13 @@
 const _ = require('lodash');
 const moment = require('moment');
 const passport = require('passport');
-const User = require('../models/User');
+const { User } = require('../models/User');
 const { check } = require('express-validator/check');
 
-exports.check_items = [
-    check('user.email').isEmail(),
-    check('user.password').isLength({ min: 6 })
-];
+exports.validate_user_payload = (req, res) => {
+    req.checkBody('user.email', 'email is not valid').isEmail();
+    req.checkBody('user.password', 'password is not valid').isLength({ min: 6 });
+}
 
 exports.register_new_user = (req, res, next) => {
     const { body: { user } } = req;

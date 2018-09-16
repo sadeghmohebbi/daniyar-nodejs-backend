@@ -12,4 +12,5 @@ var fieldSchema = new Schema({
     updated_at: { type: Number, default: moment().unix() }
 });
 
-module.exports = mongoose.model('Field', fieldSchema);
+var Field = mongoose.model('Field', fieldSchema);
+module.exports = { Field };

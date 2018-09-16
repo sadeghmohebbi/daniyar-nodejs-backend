@@ -10,4 +10,5 @@ var citySchema = new Schema({
     updated_at: { type: Number, default: moment().unix() }
 });
 
-module.exports = mongoose.model('City', citySchema);rx
+var City = mongoose.model('City', citySchema);
+module.exports = { City }

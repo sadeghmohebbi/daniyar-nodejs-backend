@@ -19,4 +19,5 @@ var universitySchema = new Schema({
     updated_at: { type: Number, default: moment().unix() }
 });
 
-module.exports = mongoose.model('University', universitySchema);
+var University = mongoose.model('University', universitySchema);
+module.exports = { University }

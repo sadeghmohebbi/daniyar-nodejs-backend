@@ -13,6 +13,7 @@ var contentSchema = new Schema({
     ]},
     featured_image: String,
     title: String,
+    body: String,
     attachments: [String],
     is_hidden: { type: Boolean, default: false},
     is_active: { type: Boolean, default: false},
@@ -20,4 +21,5 @@ var contentSchema = new Schema({
     updated_at: { type: Number, default: moment().unix() }
 });
 
-module.exports = mongoose.model('Content', contentSchema);
+var Content = mongoose.model('Content', contentSchema);
+module.exports = { Content };

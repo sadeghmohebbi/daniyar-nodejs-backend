@@ -11,4 +11,5 @@ var majorSchema = new Schema({
     updated_at: { type: Number, default: moment().unix() }
 });
 
-module.exports = mongoose.model('Major', majorSchema);
+var Major = mongoose.model('Major', majorSchema);
+module.exports = { Major };
