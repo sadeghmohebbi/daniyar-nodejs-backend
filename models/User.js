@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
-const moment = require('moment');
 const CryptoJS = require("crypto-js");
 
 const saltRounds = 10;
@@ -24,7 +23,7 @@ var userSchema = new Schema({
     major: { type: Schema.ObjectId, ref: 'Major' },
     field: { type: Schema.ObjectId, ref: 'Field' },
     city: { type: Schema.ObjectId, ref: 'City' },
-    image_urls: [String],
+    avater_urls: [String],
     role: { type: String, default: "user", enum: [
         "student",
         "student-master",
@@ -34,9 +33,7 @@ var userSchema = new Schema({
         "admin"
     ], default: "student"},
     is_hidden: { type: Boolean, default: false},
-    is_active: { type: Boolean, default: true},
-    created_at: { type: Number, default: moment().unix() },
-    updated_at: { type: Number, default: moment().unix() }
+    is_active: { type: Boolean, default: true}
 });
 
 userSchema.methods.setPassword = function(password) {
@@ -73,4 +70,4 @@ userSchema.index({ user_name: 1}, { unique: true });
 userSchema.index({ email: 1}, { unique: true });
 
 var User = mongoose.model('User', userSchema);
-module.exports = { User }
+module.exports = { User };

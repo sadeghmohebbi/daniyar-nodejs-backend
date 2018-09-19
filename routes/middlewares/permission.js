@@ -1,9 +1,9 @@
-const User = require('../../models/User');
+const { User } = require('../../models/User');
 
 // middleware for doing role-based permissions
 module.exports = function permit(...allowed) {
     
-    const isAllowed = role => allowed.indexOf(role) > -1;
+    const isAllowed = role => allowed.indexOf(role) > -1 || role == "all";
     
     // return a middleware
     return (req, res, next) => {

@@ -1,14 +1,25 @@
 var mongoose = require('mongoose').set('debug', true);
 var Promise = require('promise');
+var timestamps = require('mongoose-timestamp');
+
+//global plugins
+mongoose.plugin(timestamps,  {
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
+});
 
 
 const TAG = "[db]"
 
 //for using models in project it should be defined before server start
 function defineModels() {
-    let models = {};
-    models["User"] = require('./models/User');
-    return models;
+    require('./models/User');
+    require('./models/City');
+    require('./models/Content');
+    require('./models/Field');
+    require('./models/Major');
+    require('./models/University');
+    return true;
 }
 
 function start() {
@@ -26,6 +37,7 @@ function start() {
                 reject(error);
             } else {
                 console.log(TAG, "models defined and mongoose connected");
+
                 resolve(defineModels());
             }
         });
