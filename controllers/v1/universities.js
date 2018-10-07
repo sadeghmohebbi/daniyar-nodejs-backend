@@ -31,8 +31,10 @@ exports.get_universities = (req, res, next) => {
 exports.get_university_by_id = (req, res, next) => {
     const { params: { id } } = req;
     return University.findById(id).exec((err, university) => {
-        if (err || !university) {
+        if (err) {
             return res.status(400).send(err);
+        } else if (!university) {
+            return res.sendStatus(404);
         }
 
         return res.json({ university });

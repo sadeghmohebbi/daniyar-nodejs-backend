@@ -7,5 +7,6 @@ router.use('/cities', require('./cities'));
 router.use('/fields', require('./fields'));
 router.use('/majors', require('./majors'));
 router.use('/uploads', require('./uploads'));
+router.use('/contents', require('./contents'));
 
 module.exports = router;
