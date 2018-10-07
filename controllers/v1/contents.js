@@ -13,9 +13,6 @@ exports.validate_content = (req, res, next) => {
         "abstracted-lesson",
         "blog-post"
     ]);
-    req.checkBody('attachments', 'attachments is not array').isArray();
-    req.checkBody('images', 'images is not array').isArray();
-    req.checkBody('featured_image', 'featured_image is not string').isString();
     req.checkBody('title', 'title is not string').isString();
     req.checkBody('body', 'body is not string').isString();
     return validateMessage(req, res, next);
@@ -24,7 +21,7 @@ exports.validate_content = (req, res, next) => {
 exports.get_contents = (req, res, next) => {
     return Content.find(_.assign(_.mapValues(_.pickBy(req.query, _.identity), (key, value) => {
         return _.includes(['title', 'body'], key) ? new RegExp(value) : value;
-    }), {is_active: true, is_hidden: false})).select('-is_active -os_hidden').exec((err, contents) => {
+    }), {is_active: true, is_hidden: false})).select('-is_active -is_hidden').exec((err, contents) => {
         if (err) {
             return res.status(400).send(err);
         }
@@ -48,9 +45,8 @@ exports.get_contents_by_id = (req, res, next) => {
 
 exports.create_new_content = (req, res, next) => {
     //getting user id from token header
-    const { sub: { user_id } } = req;
-
-    return Content.create(_.chain(req.body).pickBy(_.identity).pick(pick_items).assign({ user_id }).value(), (err, content) => {
+    const { sub: { id } } = req;
+    return Content.create(_.chain(req.body).pickBy(_.identity).pick(pick_items).assign({ user_id: id }).value(), (err, content) => {
         if (err) {
             return res.status(400).send(err);
         }
