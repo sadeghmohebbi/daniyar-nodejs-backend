@@ -1,4 +1,4 @@
-const { City } = require('../../models/city');
+const { City } = require('../../models/City');
 const _ = require('lodash');
 const tools = require('../../utils/tools');
 const validateMessage = require('../../utils/validator-message');
