@@ -3,18 +3,17 @@ const _ = require('lodash');
 const tools = require('../../utils/tools');
 const validateMessage = require('../../utils/validator-message');
 
-const pick_items = ['name', 'website', 'majors', 'fields', 'city', 'address', 'postal_code', 'logo_image_url'];
+const pick_items = ['name', 'website', 'majors', 'city', 'address', 'postal_code', 'logo_image_url'];
 
 exports.validate_university = (req, res, next) => {
     req.checkBody('name', 'name is not string').isString();
     req.checkBody('website', 'website is not url').isURL();
     req.checkBody('majors', 'majors is not valid array').isArray().isLength({ min: 1});
-    req.checkBody('fields', 'name is not valid array').isArray().isLength({ min: 1});
     req.checkBody('city', 'city is not valid mongo id').isMongoId();
     req.checkBody('address', 'address is not string').isString();
     req.checkBody('postal_code', 'postal_code is not string').isString();
     req.checkBody('logo_image_url', 'logo_image_url is not string').isString();
-    validateMessage(req, res, next);
+    return validateMessage(req, res, next);
 }
 
 exports.get_universities = (req, res, next) => {

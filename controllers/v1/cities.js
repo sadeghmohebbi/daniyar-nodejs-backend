@@ -3,12 +3,13 @@ const _ = require('lodash');
 const tools = require('../../utils/tools');
 const validateMessage = require('../../utils/validator-message');
 
-const pick_items = ['name', 'province'];
+const pick_items = ['name', 'name_en', 'province'];
 
 exports.validate_city = (req, res, next) => {
     req.checkBody('name', 'name is not string').isString();
+    req.checkBody('name_en', 'name_en is not string').isString();
     req.checkBody('province', 'province is not string').isString();
-    validateMessage(req, res, next);
+    return validateMessage(req, res, next);
 }
 
 exports.get_cities = (req, res, next) => {

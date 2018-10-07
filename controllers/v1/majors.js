@@ -8,7 +8,7 @@ const pick_items = ["name", "name_en"];
 exports.validate_major = (req, res, next) => {
     req.checkBody('name', 'name is not string').isString();
     req.checkBody('name_en', 'name_en is not string').isString();
-    validateMessage(req, res, next);
+    return validateMessage(req, res, next);
 }
 
 exports.get_majors = (req, res, next) => {

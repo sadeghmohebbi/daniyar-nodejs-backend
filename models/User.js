@@ -16,6 +16,7 @@ var userSchema = new Schema({
     user_name: String,
     full_name: String,
     student_email: String,
+    student_code: String,
     address: String,
     bio: String,
     mobile_number: String,

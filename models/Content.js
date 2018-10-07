@@ -14,8 +14,9 @@ var contentSchema = new Schema({
     title: String,
     body: String,
     attachments: [String],
-    is_hidden: { type: Boolean, default: false},
-    is_active: { type: Boolean, default: false}
+    images: [String],
+    is_hidden: { type: Boolean, default: false },
+    is_active: { type: Boolean, default: true }
 });
 
 var Content = mongoose.model('Content', contentSchema);

@@ -1,5 +1,6 @@
 const multer = require('multer');
 const moment = require('moment');
+const _ = require('lodash');
 
 exports.paginate = (array, limit, page) => {
     //pagination props setup
@@ -27,7 +28,7 @@ exports.multerUpload = () => {
           cb(null, 'public/images/uploads')
         },
         filename: (req, file, cb) => {
-          cb(null, file.fieldname + '-' + moment().unix())
+          cb(null, file.fieldname + '_' + moment().unix() + _.random(9999) +"."+ file.mimetype.split('/')[1])
         }
     });
     return multer({ storage });

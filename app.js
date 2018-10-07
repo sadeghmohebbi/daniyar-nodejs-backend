@@ -31,13 +31,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(validator());
 
 //starting and defining mongo db models
-db.start().then(() => {
-    //configure passport
-    require('./utils/passport-local');
-    
-}).catch((err) => {
-    console.error("[Server]", err);
-});
+db.start();
+
+//configure passport authenticator strategies
+require('./utils/passport-local')();
 
 //root welcome page api
 app.get('/', (req, res) => res.send('<p>Welcome to <strong>Daniyar</strong> API</p>'));
@@ -47,5 +44,5 @@ app.use(require('./routes'));
 
 var port = process.env.PORT || 3000;
 app.listen(port, '0.0.0.0', function () {
-    console.log('[Server] http: serat app listening on port ' + port);
+    console.log('[Server] http: Daniyar app listening on port ' + port);
 });
