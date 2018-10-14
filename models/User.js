@@ -20,6 +20,8 @@ var userSchema = new Schema({
     address: String,
     bio: String,
     mobile_number: String,
+    skills: String,
+    interests: String,
     university: { type: Schema.ObjectId, ref: 'University'},
     major: { type: Schema.ObjectId, ref: 'Major' },
     field: { type: Schema.ObjectId, ref: 'Field' },
