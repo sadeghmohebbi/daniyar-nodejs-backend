@@ -19,9 +19,12 @@ const contentController = require('../../controllers/v1/contents');
 
 router.get('/', auth.optional, contentController.get_contents);
 
+router.get('/types', auth.optional, contentController.get_content_types);
+
 router.get('/:id', auth.optional, contentController.get_contents_by_id);
 
 router.post('/', contentController.validate_content, auth.required, contentController.create_new_content);
+
 
 module.exports = router;
 

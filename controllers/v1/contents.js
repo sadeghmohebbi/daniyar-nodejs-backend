@@ -19,9 +19,16 @@ exports.validate_content = (req, res, next) => {
 }
 
 exports.get_contents = (req, res, next) => {
+    const { params: { user_id } } = req;
+
+    var content_finder = {is_active: true, is_hidden: false};
+    if (user_id) {
+        content_finder["user_id"] = user_id;
+    }
+    
     return Content.find(_.assign(_.mapValues(_.pickBy(req.query, _.identity), (key, value) => {
         return _.includes(['title', 'body'], key) ? new RegExp(value) : value;
-    }), {is_active: true, is_hidden: false})).select('-is_active -is_hidden').exec((err, contents) => {
+    }), content_finder)).select('-is_active -is_hidden').exec((err, contents) => {
         if (err) {
             return res.status(400).send(err);
         }
@@ -52,5 +59,33 @@ exports.create_new_content = (req, res, next) => {
         }
 
         return res.status(201).json({ content });
+    });
+}
+
+exports.get_content_types = (req, res, next) => {
+    //get list of content types as key/value array
+    return res.json({
+        content_types: [
+            {
+                key: "handwrited-lesson", 
+                value: "جزوه"
+            },
+            {
+                key: "sample-exam",
+                value: "نمونه سوال"
+            },
+            {
+                key: "article",
+                value: "مقاله"
+            },
+            {
+                key: "abstracted-lesson",
+                value: "خلاصه کتاب"
+            },
+            {
+                key: "blog-post",
+                value: "مطلب"
+            }
+        ]
     });
 }
