@@ -22,7 +22,7 @@ exports.get_contents = (req, res, next) => {
     const { params: { user_id } } = req;
 
     var content_finder = {is_active: true, is_hidden: false};
-    if (user_id) {
+    if (user_id && req.query.ignore_user != "1") {
         content_finder["user_id"] = user_id;
     }
     
@@ -84,7 +84,7 @@ exports.get_content_types = (req, res, next) => {
             },
             {
                 key: "blog-post",
-                value: "مطلب"
+                value: "مطلب و یادداشت"
             }
         ]
     });
