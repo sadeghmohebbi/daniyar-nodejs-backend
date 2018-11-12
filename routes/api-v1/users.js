@@ -15,7 +15,7 @@ router.get('/token', auth.basic, usersController.renew_token);
 
 router.put('/', auth.required, usersController.update_user);
 
-router.put('/avater', auth.required, multerUpload().single("avatar"), usersController.save_avater);
+router.put('/avater', auth.required, multerUpload().single("avatar"), usersController.save_avatar);
 
 router.delete('/avatar', auth.required, usersController.validate_delete_avatar, usersController.delete_avatar);
 
