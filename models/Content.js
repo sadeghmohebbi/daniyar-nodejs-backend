@@ -17,7 +17,7 @@ var contentSchema = new Schema({
     images: [String],
     is_hidden: { type: Boolean, default: false },
     is_active: { type: Boolean, default: true }
-});
+}, { toJSON: { virtuals: true } });
 
 contentSchema.virtual('user', {
     ref: 'User',
