@@ -12,3 +12,4 @@ package-lock.json
 /logs/
 primary.crt
 private.key
+.vscode
