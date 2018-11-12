@@ -19,5 +19,12 @@ var contentSchema = new Schema({
     is_active: { type: Boolean, default: true }
 });
 
+contentSchema.virtual('user', {
+    ref: 'User',
+    localField: 'user_id',
+    foreignField: '_id',
+    justOne: true
+});
+
 var Content = mongoose.model('Content', contentSchema);
 module.exports = { Content };
