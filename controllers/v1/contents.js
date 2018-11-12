@@ -28,7 +28,7 @@ exports.get_contents = (req, res, next) => {
     
     return Content.find(_.assign(_.mapValues(_.pickBy(req.query, _.identity), (key, value) => {
         return _.includes(['title', 'body'], key) ? new RegExp(value) : value;
-    }), content_finder)).populate({path: 'user', model: 'User', select: 'email full_name avater_urls'}).select('-is_active -is_hidden').exec((err, contents) => {
+    }), content_finder)).populate({path: 'user', model: 'User', select: '_id email full_name avatar_urls'}).select('-is_active -is_hidden').exec((err, contents) => {
         if (err) {
             return res.status(400).send(err);
         }
@@ -39,7 +39,7 @@ exports.get_contents = (req, res, next) => {
 
 exports.get_contents_by_id = (req, res, next) => {
     const { params: { id } } = req;
-    return Content.findById(id).populate({path: 'user', model: 'User', select: 'email full_name avater_urls'}).exec((err, content) => {
+    return Content.findById(id).populate({path: 'user', model: 'User', select: '_id email full_name avatar_urls'}).exec((err, content) => {
         if (err) {
             return res.status(400).send(err);
         } else if (!content) {

@@ -27,7 +27,7 @@ var userSchema = new Schema({
     major: { type: Schema.ObjectId, ref: 'Major' },
     field: { type: Schema.ObjectId, ref: 'Field' },
     city: { type: Schema.ObjectId, ref: 'City' },
-    avater_urls: [String],
+    avatar_urls: [String],
     role: { type: String, default: "user", enum: [
         "student",
         "student-master",

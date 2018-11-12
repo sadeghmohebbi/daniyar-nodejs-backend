@@ -11,7 +11,7 @@ exports.validate_user_payload = (req, res, next) => {
 }
 
 exports.validate_delete_avatar = (req, res, next) => {
-    req.checkQuery('avater_url', 'avatar_url is not string').isString();
+    req.checkQuery('avatar_url', 'avatar_url is not string').isString();
     return validateMessage(req, res, next);
 }
 
@@ -83,7 +83,7 @@ exports.renew_token = (req, res, next) => {
     });
 }
 
-exports.save_avater = (req, res, next) => {
+exports.save_avatar = (req, res, next) => {
     if (req.file) {
         const {sub: { id } } = req;
 
