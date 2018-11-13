@@ -26,9 +26,9 @@ exports.get_contents = (req, res, next) => {
         content_finder["user_id"] = user_id;
     }
     
-    return Content.find(_.assign(_.mapValues(_.pickBy(req.query, _.identity), (key, value) => {
-        return _.includes(['title', 'body'], key) ? new RegExp(value) : value;
-    }), content_finder)).populate({path: 'user', model: 'User', select: '_id email user_name full_name avatar_urls'}).select('-is_active -is_hidden').exec((err, contents) => {
+    return Content.find(_.chain(req.query).pickBy(_.identity).pick(pick_items).mapValues((key, value) => {
+            return _.includes(['title', 'body'], key) ? new RegExp(value) : value;
+        }).assign(content_finder).value()).populate({path: 'user', model: 'User', select: '_id email user_name full_name avatar_urls'}).select('-is_active -is_hidden').exec((err, contents) => {
         if (err) {
             return res.status(400).send(err);
         }
