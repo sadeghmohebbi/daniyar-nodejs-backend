@@ -13,4 +13,3 @@ package-lock.json
 primary.crt
 private.key
 .vscode
-config.js
